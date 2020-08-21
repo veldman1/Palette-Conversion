@@ -1,0 +1,8 @@
+;paint.net Palette File
+;Palette Name: TestPalette
+;Description: My Description
+;Colors: 4
+#521296
+#8a1fac
+#d4864a
+#ebdb5e
