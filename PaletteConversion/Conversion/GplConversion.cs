@@ -31,12 +31,12 @@ namespace PaletteConversion
             var colors = new List<Color>();
             var description = string.Empty;
 
-            Regex gplColorRegex = new Regex(@"([0-9]+)\s([0-9]+)\s([0-9]+)\s+[0-9a-zA-Z]+", RegexOptions.Compiled);
+            Regex gplColorRegex = new Regex(@"^([0-9]+)\s+([0-9]+)\s+([0-9]+)\s+[0-9a-zA-Z]+", RegexOptions.Compiled | RegexOptions.Multiline);
             Regex commentsRegex = new Regex(";[^\n]+", RegexOptions.Compiled);
             Regex gplTitleRegex = new Regex(@"#Palette Name: ([^\n]+)", RegexOptions.Compiled);
             Regex gplDescriptionRegex = new Regex(@"#Description: ([^\n]+)", RegexOptions.Compiled);
 
-            var lines = gplContent.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            var lines = gplContent.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
             gplContent = commentsRegex.Replace(gplContent, "");
 
@@ -45,6 +45,7 @@ namespace PaletteConversion
             for (int i = 1; i < lines.Length; i++)
             {
                 var line = lines[i];
+                line = line.Replace("\r", string.Empty);
 
                 // If there is metadata, try to parse this line for title or description
                 if (line.StartsWith("#"))
