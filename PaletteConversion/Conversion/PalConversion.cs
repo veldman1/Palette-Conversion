@@ -10,15 +10,10 @@ namespace PaletteConversion
 {
     public class PalConversion : IPaletteFormatReader, IPaletteFormatWriter
     {
-        private IList<string> _fileExtensions;
-
-        public PalConversion()
+        private IList<string> _fileExtensions = new List<string>
         {
-            _fileExtensions = new List<string>
-            {
-                ".pal"
-            };
-        }
+            ".pal"
+        };
 
         public IList<string> FileExtensions { get
             {
@@ -26,15 +21,12 @@ namespace PaletteConversion
             }
         }
 
-        public Palette ReadPaletteFromPath(string path)
+        public Palette FromContents(string content, string title = "palette")
         {
             var colors = new List<Color>();
-            var title = Path.GetFileNameWithoutExtension(path);
             var description = string.Empty;
 
             Regex _regexHex = new Regex(@"^\s*([0-9]+)\s+([0-9]+)\s+([0-9]+)\s*$", RegexOptions.Multiline);
-
-            var content = File.ReadAllText(path);
 
             var rgbMatches = _regexHex.Matches(content);
             foreach (Match item in rgbMatches)

@@ -10,33 +10,27 @@ namespace PaletteConversion
 {
     public class HexConversion : IPaletteFormatReader, IPaletteFormatWriter
     {
-        private IList<string> _fileExtensions;
-
-        public HexConversion()
+        private IList<string> _fileExtensions = new List<string>
         {
-            _fileExtensions = new List<string>
-            {
-                ".hex"
-            };
-        }
+            ".hex"
+        };
 
-        public IList<string> FileExtensions { get
+        public IList<string> FileExtensions
+        {
+            get
             {
                 return _fileExtensions;
             }
         }
 
-        public Palette ReadPaletteFromPath(string path)
+        public Palette FromContents(string content, string title = "palette")
         {
             Regex hexRegex = new Regex("[a-fA-F0-9]+", RegexOptions.Compiled);
 
             var colors = new List<Color>();
-            var title = Path.GetFileNameWithoutExtension(path);
             var description = string.Empty;
 
             Regex _regexHex = new Regex("[^a-fA-F0-9]", RegexOptions.Compiled);
-
-            var content = File.ReadAllText(path);
 
             var hexMatches = hexRegex.Matches(content);
             foreach (Match item in hexMatches)

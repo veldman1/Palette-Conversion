@@ -5,6 +5,6 @@ namespace PaletteConversion
     public interface IPaletteFormatReader : IFileFormat
 
     {
-        Palette ReadPaletteFromPath(string path);
+        Palette FromContents(string path, string title);
     }
 }

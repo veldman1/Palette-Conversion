@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PaletteConversion;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace PaletteConversionTests
@@ -26,7 +27,7 @@ namespace PaletteConversionTests
         public void TestPlainTxt()
         {
             var plainTextConversion = new TxtConversion();
-            var loadedPalette = plainTextConversion.ReadPaletteFromPath("./TestRead/test-plain.txt");
+            var loadedPalette = plainTextConversion.FromContents("./TestRead/test-plain.txt", "test-plain");
 
             Assert.IsTrue(Enumerable.SequenceEqual(_expectedColors, loadedPalette.Colors));
             Assert.AreEqual("test-plain", loadedPalette.Title);
@@ -37,7 +38,7 @@ namespace PaletteConversionTests
         public void TestPaintNetTxt()
         {
             var plainTextConversion = new TxtConversion();
-            var loadedPalette = plainTextConversion.ReadPaletteFromPath("./TestRead/test-paintnet.txt");
+            var loadedPalette = plainTextConversion.FromContents("./TestRead/test-paintnet.txt");
 
             Assert.IsTrue(Enumerable.SequenceEqual(_expectedColors, loadedPalette.Colors));
             Assert.AreEqual("TestPalette", loadedPalette.Title);
@@ -54,10 +55,13 @@ namespace PaletteConversionTests
             cssExpectedColors.Add(Color.FromArgb(0, 0, 255));
 
             var cssConversion = new CssConversion();
-            var loadedPalette = cssConversion.ReadPaletteFromPath("./TestRead/test.css");
+
+            var path = "./TestRead/test.css";
+            var contents = File.ReadAllText(path);
+            var loadedPalette = cssConversion.FromContents(contents);
 
             Assert.IsTrue(Enumerable.SequenceEqual(cssExpectedColors, loadedPalette.Colors));
-            Assert.AreEqual("test", loadedPalette.Title);
+            Assert.AreEqual("palette", loadedPalette.Title);
             Assert.AreEqual(string.Empty, loadedPalette.Description);
         }
 
@@ -65,10 +69,13 @@ namespace PaletteConversionTests
         public void TestHex()
         {
             var hexConversion = new HexConversion();
-            var loadedPalette = hexConversion.ReadPaletteFromPath("./TestRead/test.hex");
+
+            var path = "./TestRead/test.hex";
+            var contents = File.ReadAllText(path);
+            var loadedPalette = hexConversion.FromContents(contents);
 
             Assert.IsTrue(Enumerable.SequenceEqual(_expectedColors, loadedPalette.Colors));
-            Assert.AreEqual("test", loadedPalette.Title);
+            Assert.AreEqual("palette", loadedPalette.Title);
             Assert.AreEqual(string.Empty, loadedPalette.Description);
         }
 
@@ -76,10 +83,13 @@ namespace PaletteConversionTests
         public void TestPal()
         {
             var palConversion = new PalConversion();
-            var loadedPalette = palConversion.ReadPaletteFromPath("./TestRead/test.pal");
+
+            var path = "./TestRead/test.pal";
+            var contents = File.ReadAllText(path);
+            var loadedPalette = palConversion.FromContents(contents);
 
             Assert.IsTrue(Enumerable.SequenceEqual(_expectedColors, loadedPalette.Colors));
-            Assert.AreEqual("test", loadedPalette.Title);
+            Assert.AreEqual("palette", loadedPalette.Title);
             Assert.AreEqual(string.Empty, loadedPalette.Description);
         }
 
@@ -87,7 +97,10 @@ namespace PaletteConversionTests
         public void TestGpl()
         {
             var gplConversion = new GplConversion();
-            var loadedPalette = gplConversion.ReadPaletteFromPath("./TestRead/test.gpl");
+
+            var path = "./TestRead/test.gpl";
+            var contents = File.ReadAllText(path);
+            var loadedPalette = gplConversion.FromContents(contents);
 
             Assert.IsTrue(Enumerable.SequenceEqual(_expectedColors, loadedPalette.Colors));
             Assert.AreEqual("TestPalette", loadedPalette.Title);

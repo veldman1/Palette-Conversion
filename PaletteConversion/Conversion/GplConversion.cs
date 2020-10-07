@@ -26,10 +26,9 @@ namespace PaletteConversion
             }
         }
 
-        public Palette ReadPaletteFromPath(string path)
+        public Palette FromContents(string gplContent, string title = "palette")
         {
             var colors = new List<Color>();
-            var title = Path.GetFileNameWithoutExtension(path);
             var description = string.Empty;
 
             Regex gplColorRegex = new Regex(@"([0-9]+)\s([0-9]+)\s([0-9]+)\s+[0-9a-zA-Z]+", RegexOptions.Compiled);
@@ -37,8 +36,7 @@ namespace PaletteConversion
             Regex gplTitleRegex = new Regex(@"#Palette Name: ([^\n]+)", RegexOptions.Compiled);
             Regex gplDescriptionRegex = new Regex(@"#Description: ([^\n]+)", RegexOptions.Compiled);
 
-            var lines = File.ReadAllLines(path);
-            var gplContent = File.ReadAllText(path);
+            var lines = gplContent.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
             gplContent = commentsRegex.Replace(gplContent, "");
 

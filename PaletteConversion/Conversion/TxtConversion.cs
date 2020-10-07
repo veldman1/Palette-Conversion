@@ -30,10 +30,9 @@ namespace PaletteConversion
 
         public bool WritePaintNetMetadata { get; set; }
 
-        public Palette ReadPaletteFromPath(string path)
+        public Palette FromContents(string path, string title = "palette")
         {
             var colors = new List<Color>();
-            var title = Path.GetFileNameWithoutExtension(path);
             var description = string.Empty;
 
             Regex hexRegex = new Regex("[a-fA-F0-9]+", RegexOptions.Compiled);

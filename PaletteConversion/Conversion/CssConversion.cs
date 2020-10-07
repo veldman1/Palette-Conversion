@@ -33,10 +33,8 @@ namespace PaletteConversion
             }
         }
 
-        public Palette ReadPaletteFromPath(string path)
+        public Palette FromContents(string cssContent, string title = "palette.css")
         {
-            var cssContent = File.ReadAllText(path);
-
             var colors = new List<Color>();
 
             var rgbMatches = _regexRgb.Matches(cssContent);
@@ -58,7 +56,7 @@ namespace PaletteConversion
             {
                 Colors = colors,
                 Description = string.Empty,
-                Title = Path.GetFileNameWithoutExtension(path),
+                Title = Path.GetFileNameWithoutExtension(title),
             };
         }
     }
