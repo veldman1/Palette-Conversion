@@ -6,5 +6,5 @@
 - PAL
 - TXT
 
-### Export as:
+### Read only:
 - CSS
